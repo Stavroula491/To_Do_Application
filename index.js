@@ -69,12 +69,10 @@ async function checkCategory() {
 
 
 app.get("/", async (req, res) => {
-    
     const data = await checkTasks();
     const data2 = await checkCompleted();
     const data3 = await getCategories();
     const data4 = await checkCategory();
-
     res.render("index.ejs", {data: data, data2: data2, data3: data3, data4: data4});
 });
 
@@ -97,48 +95,33 @@ app.post('/delete', async (req, res) => {
 });
 
 app.post('/update', async (req, res) => {
-
     const idtoComple = req.body.tasktoComplete
-
     const taskToUpdate = await db.query("SELECT * FROM pending_tasks WHERE id = $1;", [idtoComple])
-
     const taskToUpdate_task = [];
     taskToUpdate.rows.forEach((row) => {
         taskToUpdate_task.push(row);
     });
-
     db.query("DELETE FROM pending_tasks WHERE id = $1;", [taskToUpdate_task[0].id])
-
     db.query("INSERT INTO completed_tasks (task, category_id) VALUES ($1, $2)", [taskToUpdate_task[0].task, taskToUpdate_task[0].category_id]);
-
     res.redirect("/");
 });
 
 app.post('/doagain', async (req, res) => {
-
     const idtoDoAgain = req.body.tasktoRedo
-
     const taskToDoAgain = await db.query("SELECT * FROM completed_tasks WHERE id = $1;", [idtoDoAgain]);
-
     const taskToDoAgain_task = [];
     taskToDoAgain.rows.forEach((row) => {
         taskToDoAgain_task.push(row);
     });
-
     db.query("DELETE FROM completed_tasks WHERE id = $1;", [taskToDoAgain_task[0].id]);
-
     db.query("INSERT INTO pending_tasks (task, category_id) VALUES ($1, $2)", [taskToDoAgain_task[0].task, taskToDoAgain_task[0].category_id]);
-
     res.redirect("/");
 
 });
 
 app.post('/deletecomp', async (req, res) => {
-
     const idtoDelete = req.body.idDeleteCompl
-
     db.query("DELETE FROM completed_tasks WHERE id =$1;", [idtoDelete])
-
     res.redirect("/");
 });
 
