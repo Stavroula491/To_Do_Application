@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To do</title>
+  <link rel="stylesheet" href="./styles/main.css">
+</head>
+
+<body>
+        <div class="submit-task-div">
+            <form action = "/submit" method = "post">
+            <input type="text" name="task_to_do" id="userInput" placeholder="Enter a task" autofocus autocomplete="off">
+            <button class="submit-button" type = "submit">Submit Task</button>
+            </form>
+        </div>
+
+    <div class="dropdown">
+        <button class="dropdown-button submit-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-menu-button" viewBox="0 0 16 16">
+            <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h8A1.5 1.5 0 0 1 11 1.5v2A1.5 1.5 0 0 1 9.5 5h-8A1.5 1.5 0 0 1 0 3.5zM1.5 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5z"/>
+            <path d="m7.823 2.823-.396-.396A.25.25 0 0 1 7.604 2h.792a.25.25 0 0 1 .177.427l-.396.396a.25.25 0 0 1-.354 0M0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
+            </svg>
+            Categories</button>
+        <div class="dropdown-content">
+            <% data3.forEach(item=> { %>
+                <form action="/category" method="post">
+                    <input type="hidden" name="categoryID" value="<%= item.id %>">
+                    <button><%= item.name %></button>
+                </form>
+            <% }); %>
+        </div>
+    </div>
+
+    <div class="container">
+
+    <div class="to-do-list">
+        <h1>TO DOs</h1>
+        
+        <h2><%= data4[0].name %></h2>
+    <ul>
+        <% data.forEach(item=> { %>
+            
+            <li>
+
+            <div class="list-div">
+                <div class="task-div">
+                <%= item.task %>
+                </div>
+
+                <div class="button-div">
+                <!-- Button to send the task to completed tasks -->
+                <form action="/update" method="post">
+                <input type="hidden" name = "tasktoComplete" value = "<%= item.id %>">
+                <button class="button-action" type="/update/<%= item.id %>"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                    <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+                  </svg></button>
+                </form>
+                
+                <!-- Button to send the task to deleted -->
+                <form action="/delete" method="post">
+                <input type="hidden" name = "tasktoDelete" value="<%= item.id %>">
+                <button class="button-action" button = "/delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                    <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                  </svg>
+                </button> 
+                </form>
+                </div>
+
+            </div>
+
+            </li>
+            <% }); %>
+    </ul>
+    </div>
+     
+    <div class="completed-list">
+        <h1>Completed tasks</h1>
+        
+            <ul>
+                <% data2.forEach(item=> { %>
+                    <li>
+
+                    <div class="list-div">
+
+                        <div class="task-div">
+                        <%= item.task %>
+                        </div>
+
+                        <div class="button-div">
+                        <!-- Button to send the task bask to TO DOs -->
+                        <form action="/doagain" method="post">
+                        <input type="hidden" name="tasktoRedo" value= "<%= item.id %>">
+                        <button class="button-action" type="/doagain">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
+                                <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9"/>
+                                <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5 5 0 0 0 8 3M3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9z"/>
+                              </svg>
+                        </button> 
+                        </form>
+
+                        <form action="/deletecomp" method="post">
+                        <input type="hidden" name="idDeleteCompl" value="<%= item.id %>">
+                        <button class="button-action" type="/deletecomp"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                        </svg></button> 
+                        </form>
+                        </div>
+                        
+
+                    </div>
+                    </li>
+                    <% }); %>
+            </ul>
+          
+        
+    </div>
+
+    </div>
+    
+</body>
+
+</html>
