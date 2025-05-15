@@ -1,6 +1,5 @@
 # To_Do_Application
 
-![My Image](Desktop-UI.png)
 
 Steps:
 1. Clone the repo.
