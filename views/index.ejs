@@ -36,9 +36,10 @@
     <div class="container">
 
     <div class="to-do-list">
-        <h1>TO DOs</h1>
-        
-        <h2><%= data4[0].name %></h2>
+        <h1>Pending Tasks</h1>
+        <hr>
+        <h2 class="category_name"><%= data4[0].name %></h2>
+        <hr>
     <ul>
         <% data.forEach(item=> { %>
             
@@ -76,8 +77,9 @@
     </div>
      
     <div class="completed-list">
-        <h1>Completed tasks</h1>
-        
+        <h1>Completed Tasks</h1>
+        <hr>
+        <hr>
             <ul>
                 <% data2.forEach(item=> { %>
                     <li>
