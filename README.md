@@ -1,5 +1,7 @@
 # To_Do_Application
 
+![Alt text](Desktop-UI)
+
 Steps:
 1. Clone the repo.
 2. Install dependencies.
