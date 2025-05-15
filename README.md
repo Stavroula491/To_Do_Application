@@ -1,6 +1,6 @@
 # To_Do_Application
 
-![Alt text](Desktop-UI)
+![My Image](Desktop-UI.png)
 
 Steps:
 1. Clone the repo.
